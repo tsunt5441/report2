@@ -61,13 +61,13 @@
         //背景  
        // 木をスプライトで作成
       
-      var texture = textureLoader.load("img/tree0.png");
-      const material = new THREE.SpriteMaterial({ map: texture,});
-      // 木左
-      const sprite1 = new THREE.Sprite(material);
-      sprite1.scale.set(1,2,1);
-      sprite1.position.set(-1,1,0); //位置を指定
-      scene.add(sprite1);
+        var texture = textureLoader.load("img/tree0.png");
+        const material = new THREE.SpriteMaterial({ map: texture,});
+        // 木左
+        const sprite1 = new THREE.Sprite(material);
+        sprite1.scale.set(1,2,1);
+        sprite1.position.set(-1,1,0); //位置を指定
+        scene.add(sprite1);
         
         update();
 
