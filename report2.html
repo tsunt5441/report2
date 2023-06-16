@@ -118,16 +118,11 @@
         const all = new THREE.Group();
         all.add(earth); //地球を追加
         all.add(moon); //月を追加
-        all.add(satellite); //j人工衛星を追加
+        all.add(satellite); //人工衛星を追加
         all.position.set(0, 0, 0); //全体グループの原点の位置
         scene.add(all);
 
-        //　背景
-        var geometry = new THREE.SphereGeometry(300, 300, 300);
-        var material = new THREE.MeshPhongMaterial({ color: 0x000000,wireframe:true});
-        var background = new THREE.Mesh(geometry, material);
-        moon.position.set(0, 0, 0); //位置を指定
-        scene.add(background);
+        //背景
         
         update();
 
