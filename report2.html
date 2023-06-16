@@ -52,13 +52,20 @@
         
         // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();
+        //地球　読み込み
         var texture = textureLoader.load("2k_earth_daymap.jpg");
         var Earth = new THREE.MeshPhongMaterial();
         Earth.map = texture;
         
+        //月　読み込み
         var texture = textureLoader.load("2k_moon.jpg");
         var Moon = new THREE.MeshPhongMaterial();
         Moon.map = texture;
+
+        //星　読み込み
+        var texture = textureLoader.load("2k_stars_milky_way.png");
+        var star = new THREE.MeshPhongMaterial();
+        star.map = texture;
         
         //地球
         var geometry = new THREE.SphereGeometry(3, 64, 32)
