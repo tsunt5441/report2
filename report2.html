@@ -1,1 +1,155 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
 
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 25);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+         // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+        directionalLight2.position.set(-10, -10, -10);
+        // シーンに追加
+        scene.add(directionalLight2);
+    
+         // helper
+        const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+        
+        // テクスチャー読み込み
+        var textureLoader = new THREE.TextureLoader();
+        var texture = textureLoader.load("2k_earth_daymap.jpg");
+        var Earth = new THREE.MeshPhongMaterial();
+        Earth.map = texture;
+        
+        var texture = textureLoader.load("2k_moon.jpg");
+        var Moon = new THREE.MeshPhongMaterial();
+        Moon.map = texture;
+        
+        //地球
+        var geometry = new THREE.SphereGeometry(3, 64, 32)
+        var material = new THREE.MeshPhongMaterial({color: 0x0000ff,wireframe:true});
+        var earth = new THREE.Mesh(geometry, material);
+        var earth = new THREE.Mesh(geometry, Earth);
+        earth.position.set(0, 0, 0); //位置を指定
+       
+        
+        // 月
+        var geometry = new THREE.SphereGeometry(1, 64, 32);
+        var material = new THREE.MeshPhongMaterial({ color: 0xF7FE2E,wireframe:true});
+        var moon = new THREE.Mesh(geometry, material);
+        var moon = new THREE.Mesh(geometry, Moon);
+        moon.position.set(-10, 0, 0); //位置を指定
+          
+        //人工衛星(胴)
+        var geometry = new THREE.BoxGeometry( 0.48, 0.96, 0.6);
+        var material = new THREE.MeshStandardMaterial( {
+          color: 0xD7DF01, 
+          metalness: 1,
+          roughness: 0.5 } ); 
+        var body = new THREE.Mesh(geometry, material);
+        body.rotation.x = 1;
+        body.position.set(5, 0, 0);
+        
+        //人工衛星（パネル１）
+        var geometry = new THREE.BoxGeometry( 0.1, 1.1, 0.6);
+        var material = new THREE.MeshStandardMaterial( {
+          color: 0x00BFFF, 
+          metalness: 1, 
+          roughness: 0.5 } ); 
+        var panel1 = new THREE.Mesh(geometry, material);
+        panel1.rotation.x = 5;
+        panel1.rotation.y = 3.15;
+        panel1.rotation.z = 1.55;
+        panel1.position.set(5.8, 0, 0);
+
+        //人工衛星（パネル２）
+        var geometry = new THREE.BoxGeometry( 0.1, 1.1, 0.6);
+        var material = new THREE.MeshStandardMaterial( {
+          color: 0x00BFFF, 
+          metalness: 1, 
+          roughness: 0.5} ); 
+        var panel2 = new THREE.Mesh(geometry, material);
+        panel2.rotation.x = 5;
+        panel2.rotation.y = 3.15;
+        panel2.rotation.z = 1.55;
+        panel2.position.set(4.2, 0, 0);
+ 
+        //人工衛星のオブジェクト
+        const satellite = new THREE.Group();
+        satellite.add(body); //胴を追加
+        satellite.add(panel1); //パネル１を追加
+        satellite.add(panel2); //パネル２を追加
+        satellite.position.set(0, 0, 0)
+        scene.add(satellite);
+
+        // 全体のオブジェクト
+        const all = new THREE.Group();
+        all.add(earth); //地球を追加
+        all.add(moon); //月を追加
+        all.add(satellite); //j人工衛星を追加
+        all.position.set(0, 0, 0); //全体グループの原点の位置
+        scene.add(all);
+
+        //　背景
+        var geometry = new THREE.SphereGeometry(300, 300, 300);
+        var material = new THREE.MeshPhongMaterial({ color: 0x000000,wireframe:true});
+        var background = new THREE.Mesh(geometry, material);
+        moon.position.set(0, 0, 0); //位置を指定
+        scene.add(background);
+        
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
+          //　地球を回転させる
+          earth.rotation.y += 0.01;
+
+          //　月を回転させる
+          moon.rotation.y += 0.005;
+
+          // 人工衛星を回転させる
+          satellite.rotation.y += 0.0025;
+
+          // 全体を回転させる
+          all.rotation.y += 0.005;;
+        }
+      }
+    </script>
+</body>
+</html>
