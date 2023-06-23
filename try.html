@@ -59,14 +59,14 @@
         // 箱を作成
         var geometry = new THREE.BoxGeometry(1, 1, 1);
         var face = new THREE.Mesh(geometry, mat);
-        face.position.set(0,0,0); //位置を指定
+        face.position.set(0,3,0); //位置を指定
         scene.add(face);   // シーンに追加
 
-        var geometry = new .PlaneGeometry(10,10,10);
-        var material = new THREE.MeshPhongMaterial ({ color: 0xffffff});
-        var ground = new THREE.Mesh (geometry);
-        ground.position.set(0,0,0);
-        scene.add(ground);
+        var planeGeometry = new THREE.PlaneGeometry(5,5,5,5);
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,0,0);
         
         update();
 
