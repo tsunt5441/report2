@@ -50,17 +50,8 @@
         const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
         
-        // テクスチャー読み込み
+        // 木をスプライトで作成
         var textureLoader = new THREE.TextureLoader();
-
-        //星(背景)　読み込み
-        /*var texture = textureLoader.load("2k_stars_milky_way.png");
-        const star = new THREE.SpriteMaterial({ map: texture,});
-        star.map = texture;*/
-        
-        //背景  
-       // 木をスプライトで作成
-      
         var texture = textureLoader.load("img/tree0.png");
         const material = new THREE.SpriteMaterial({ map: texture,});
         // 木左
