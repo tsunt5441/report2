@@ -50,17 +50,18 @@
         const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
 
-        // 木をスプライトで作成
+        // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();  
         var texture = textureLoader.load("2k_stars_milky_way.png");
-        const material = new THREE.SpriteMaterial({ map: texture,});
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = texture;
 
-        // 木左
-        var geometry = new THREE.BoxGeometry( 10, 10, 10);
-        var star1 = new THREE.Mesh(geometry, material);
-        sprite1.position.set(0,0,15); //位置を指定
-        scene.add(star1);
-
+        // 箱を作成
+        var geometry = new THREE.BoxGeometry(20, 20, 20);
+        var star = new THREE.Mesh(geometry, mat);
+        star.position.set(0,0,0); //位置を指定
+        scene.add(star);   // シーンに追加
+        
         update();
 
         // 毎フレーム時に実行されるループイベントです
