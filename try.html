@@ -56,28 +56,11 @@
         const material = new THREE.SpriteMaterial({ map: texture,});
 
         // 木左
-        var geometry = new THREE.PlaneGeometry( 1, 1 );
+        var geometry = new THREE.BoxGeometry( 10, 10, 10);
         var star1 = new THREE.Mesh(geometry, material);
         sprite1.position.set(0,0,15); //位置を指定
         scene.add(star1);
 
-        var geometry = new THREE.PlaneGeometry( 1, 1 );
-        var star2 = new THREE.Mesh(geometry, material);
-        sprite1.position.set(0,0,-15); //位置を指定
-        scene.add(star2);
-
-        var geometry = new THREE.PlaneGeometry( 1, 1 );
-        var star3 = new THREE.Mesh(geometry, material);
-        sprite1.position.set(15,0,0); //位置を指定
-        scene.add(star3);
-
-        var geometry = new THREE.PlaneGeometry( 1, 1 );
-        var star4 = new THREE.Mesh(geometry, material);
-        sprite1.position.set(-15,0,0); //位置を指定
-        scene.add(star4);
-
-       
-        
         update();
 
         // 毎フレーム時に実行されるループイベントです
