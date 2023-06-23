@@ -63,8 +63,11 @@
         scene.add(face);   // シーンに追加
 
         var geometry = new .PlaneGeometry(10,10,10);
-        var material = new THREE.MeshPhongMaterial ({ color: 0xffffff})
-        var ground = new THREE.Mesh (geometry)
+        var material = new THREE.MeshPhongMaterial ({ color: 0xffffff});
+        var ground = new THREE.Mesh (geometry);
+        ground.position.set(0,0,0);
+        scene.add(ground);
+        
         update();
 
         // 毎フレーム時に実行されるループイベントです
