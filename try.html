@@ -19,7 +19,7 @@
         document.body.appendChild(renderer.domElement);
         renderer.setSize(width, height);
         // 背景の色を設定
-        renderer.setClearColor(0xffffdd);
+        renderer.setClearColor(0x000000);
 
 
         // シーンを作成
@@ -52,15 +52,15 @@
 
         // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();  
-        var texture = textureLoader.load("2k_stars_milky_way.png");
+        var texture = textureLoader.load("face.jpg");
         var mat = new THREE.MeshPhongMaterial();
         mat.map = texture;
 
         // 箱を作成
-        var geometry = new THREE.BoxGeometry(20, 20, 20);
-        var star = new THREE.Mesh(geometry, mat);
-        star.position.set(0,0,0); //位置を指定
-        scene.add(star);   // シーンに追加
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var face = new THREE.Mesh(geometry, mat);
+        face.position.set(0,0,0); //位置を指定
+        scene.add(face);   // シーンに追加
         
         update();
 
