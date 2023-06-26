@@ -57,7 +57,7 @@
 
         var texture = textureLoader.load("2419498_m.jpg");
         var mat2 = new THREE.MeshPhongMaterial();
-        mat2.map = texture;
+        mat.map = texture;
 
         // 顔を作成
         const face = new THREE.Sprite(material);
@@ -67,7 +67,7 @@
 
         // 床(右下)を作成
         var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
-        var ground1 = new THREE.Mesh(planeGeometry,mat2);
+        var ground1 = new THREE.Mesh(planeGeometry,mat);
         ground1.rotation.set( -Math.PI/2, 0, 0 );
         ground1.position.set(1,0,1);
         scene.add(ground1);
@@ -81,29 +81,29 @@
 
          // 床(左下)を作成
         var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
-        var ground3 = new THREE.Mesh(planeGeometry,mat2);
+        var ground3 = new THREE.Mesh(planeGeometry,mat);
         ground3.rotation.set( -Math.PI/2, 0, 0 );
         ground3.position.set(-1,0,1);
         scene.add(ground3);
 
          // 床(左上)を作成
         var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
-        var ground4 = new THREE.Mesh(planeGeometry,mat2);
+        var ground4 = new THREE.Mesh(planeGeometry,mat);
         ground4.rotation.set( -Math.PI/2, 0, 0 );
         ground4.position.set(-1,0,-1);
         scene.add(ground4);
 
 	//　ケース上部
 	const geo1 = new THREE.CylinderGeometry(1,1,0.5,64); 
-        const material = new THREE.MeshBasicMaterial({color: 0x65BBE9}); 
-        const cylinder1 = new THREE.Mesh(geo1, material); 
+        const material1 = new THREE.MeshBasicMaterial({color: 0x65BBE9}); 
+        const cylinder1 = new THREE.Mesh(geo1, material1); 
         cylinder1.position.set(0,2.5,0);
         scene.add(cylinder1);
 	      
 	// ガラス部
         const geometry = new THREE.CylinderGeometry(1,1,2,64); 
-        const material1 = new THREE.MeshBasicMaterial({color: 0x65BBE9, transparent: true, opacity: 0.5}); 
-        const cylinder = new THREE.Mesh(geometry, material1); 
+        const material2 = new THREE.MeshBasicMaterial({color: 0x65BBE9, transparent: true, opacity: 0.5}); 
+        const cylinder = new THREE.Mesh(geometry, material2); 
         cylinder.position.set(0,1.5,0);
         scene.add(cylinder);
 
