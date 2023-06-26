@@ -53,14 +53,14 @@
         // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();  
         var texture = textureLoader.load("face.jpg");
-        const face = new THREE.SpriteMaterial({map:texture});
+        const material = new THREE.SpriteMaterial({map:texture});
 
         var texture = textureLoader.load("2419498_m.jpg");
         var mat2 = new THREE.MeshPhongMaterial();
         mat2.map = texture;
 
         // 顔を作成
-        const face = new THREE.Sprite(face);
+        const face = new THREE.Sprite(material);
         face.scale.set(1,1,1);
         face.position.set(0,1.5,0); //位置を指定
         scene.add(face);   // シーンに追加
