@@ -95,8 +95,8 @@
 
 	//　ケース上部
 	const geometry = new THREE.CylinderGeometry(1,1,0.5,64); 
-        const material1 = new THREE.MeshBasicMaterial({color: 0x65BBE9}); 
-        const case1 = new THREE.Mesh(geometry, material1); 
+        const material = new THREE.MeshBasicMaterial({color: 0x65BBE9}); 
+        const case1 = new THREE.Mesh(geometry, material); 
         case1.position.set(0,2.5,0);
         scene.add(case1);
 	      
@@ -108,9 +108,8 @@
         scene.add(cylinder);
 
 	// ケース下部
-	const geometry = new THREE.CylinderGeometry(1,1,0.5,64); 
-        const material1 = new THREE.MeshBasicMaterial({color: 0x65BBE9}); 
-        const case2 = new THREE.Mesh(geometry, material1); 
+	const geometry = new THREE.CylinderGeometry(1,1,0.5,64);  
+        const case2 = new THREE.Mesh(geometry, material); 
         case2.position.set(0,0.5,0);
         scene.add(case2);
 	      
