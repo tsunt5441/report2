@@ -66,13 +66,37 @@
         face.position.set(0,1.5,0); //位置を指定
         scene.add(face);   // シーンに追加
 
-        // 床を作成
+        // 床(右下)を作成
         var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
         var planeMaterial = new THREE.MeshBasicMaterial({color: 0xa96e2d});
-        var ground = new THREE.Mesh(planeGeometry,planeMaterial);
-        ground.rotation.set( -Math.PI/2, 0, 0 );
-        ground.position.set(1,0,1);
-        scene .add(ground);
+        var ground1 = new THREE.Mesh(planeGeometry,planeMaterial);
+        ground1.rotation.set( -Math.PI/2, 0, 0 );
+        ground1.position.set(1,0,1);
+        scene .add(ground1);
+
+         // 床(右上)を作成
+        var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xa96e2d});
+        var ground2 = new THREE.Mesh(planeGeometry,planeMaterial);
+        ground2.rotation.set( -Math.PI/2, 0, 0 );
+        ground2.position.set(1,0,-1);
+        scene .add(ground2);
+
+         // 床(左下)を作成
+        var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xa96e2d});
+        var ground3 = new THREE.Mesh(planeGeometry,planeMaterial);
+        ground3.rotation.set( -Math.PI/2, 0, 0 );
+        ground3.position.set(-1,0,1);
+        scene .add(ground3);
+
+         // 床(左上)を作成
+        var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xa96e2d});
+        var ground4 = new THREE.Mesh(planeGeometry,planeMaterial);
+        ground4.rotation.set( -Math.PI/2, 0, 0 );
+        ground4.position.set(-1,0,-1);
+        scene .add(ground4);
         
         update();
 
