@@ -53,16 +53,21 @@
         // テクスチャー読み込み
         var textureLoader = new THREE.TextureLoader();  
         var texture = textureLoader.load("face.jpg");
-        var mat = new THREE.MeshPhongMaterial();
-        mat.map = texture;
+        var mat1 = new THREE.MeshPhongMaterial();
+        mat1.map = texture;
 
-        // 箱を作成
+        var texture = textureLoader.load("2419498_m.jpg");
+        var mat2 = new THREE.MeshPhongMaterial();
+        mat2.map = texture;
+
+        // 顔を作成
         var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var face = new THREE.Mesh(geometry, mat);
+        var face = new THREE.Mesh(geometry, mat1);
         face.position.set(0,1.5,0); //位置を指定
         scene.add(face);   // シーンに追加
 
-        var planeGeometry = new THREE.PlaneGeometry(1,5,5,5);
+        // 床を作成
+        var planeGeometry = new THREE.PlaneGeometry(1,1,5,5);
         var planeMaterial = new THREE.MeshBasicMaterial({color: 0xa96e2d});
         var ground = new THREE.Mesh(planeGeometry,planeMaterial);
         ground.rotation.set( -Math.PI/2, 0, 0 );
