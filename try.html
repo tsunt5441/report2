@@ -109,6 +109,7 @@
 
 	// ケース下部
 	const geometry = new THREE.CylinderGeometry(1,1,0.5,64);  
+	const material = new THREE.MeshBasicMaterial({color: 0x65BBE9});
         const case2 = new THREE.Mesh(geometry, material); 
         case2.position.set(0,0.5,0);
         scene.add(case2);
