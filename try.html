@@ -74,7 +74,7 @@
 
          // 床(右上)を作成
         var planeGeometry = new THREE.PlaneGeometry(2,2,5,5);
-        var ground2 = new THREE.Mesh(planeGeometry,mat2);
+        var ground2 = new THREE.Mesh(planeGeometry,mat);
         ground2.rotation.set( -Math.PI/2, 0, 0 );
         ground2.position.set(1,0,-1);
         scene.add(ground2);
