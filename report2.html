@@ -18,17 +18,17 @@
         var renderer = new THREE.WebGLRenderer();
         document.body.appendChild(renderer.domElement);
         renderer.setSize(width, height);
+        // 背景の色を設定
+        renderer.setClearColor(0x000000);
 
-        //背景の色を設定
-        renderer.setClearColor(0xffffff);
-        
+
         // シーンを作成
         const scene = new THREE.Scene();
 
         // カメラを作成
         const camera = new THREE.PerspectiveCamera(45, width / height);
         // カメラの初期座標を設定
-        camera.position.set(0, 0, 20);
+        camera.position.set(0, 1, 8);
 
         // カメラコントローラーを作成
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -38,103 +38,81 @@
         directionalLight1.position.set(10, 10, 10);
         // シーンに追加
         scene.add(directionalLight1);
-         // 平行光源2
-        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-        directionalLight2.position.set(-10, -10, -10);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
         // シーンに追加
         scene.add(directionalLight2);
-    
-         // helper
+
+        // helper
         const gridHelper = new THREE.GridHelper(2,10); // size, step
         scene.add(gridHelper);
-        const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+        const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
-        
+
         // テクスチャー読み込み
-        var textureLoader = new THREE.TextureLoader();
-        //地球　読み込み
-        var texture = textureLoader.load("2k_earth_daymap.jpg");
-        var Earth = new THREE.MeshPhongMaterial();
-        Earth.map = texture;
-        
-        //月　読み込み
-        var texture = textureLoader.load("2k_moon.jpg");
-        var Moon = new THREE.MeshPhongMaterial();
-        Moon.map = texture;
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("face.jpg");
+        const material = new THREE.SpriteMaterial({map:texture});
 
-        //星(背景)　読み込み
-        var texture = textureLoader.load("2k_stars_milky_way.png");
-        const star = new THREE.SpriteMaterial({ map: texture,});
-        star.map = texture;
-        
-        //地球
-        var geometry = new THREE.SphereGeometry(3, 64, 32)
-        var material = new THREE.MeshPhongMaterial({color: 0x0000ff,wireframe:true});
-        var earth = new THREE.Mesh(geometry, material);
-        var earth = new THREE.Mesh(geometry, Earth);
-        earth.position.set(0, 0, 0); //位置を指定
-       
-        
-        // 月
-        var geometry = new THREE.SphereGeometry(1, 64, 32);
-        var material = new THREE.MeshPhongMaterial({ color: 0xF7FE2E,wireframe:true});
-        var moon = new THREE.Mesh(geometry, material);
-        var moon = new THREE.Mesh(geometry, Moon);
-        moon.position.set(-10, 0, 0); //位置を指定
-          
-        //人工衛星(胴)
-        var geometry = new THREE.BoxGeometry( 0.48, 0.96, 0.6);
-        var material = new THREE.MeshStandardMaterial( {
-          color: 0xD7DF01, 
-          metalness: 1,
-          roughness: 0.5 } ); 
-        var body = new THREE.Mesh(geometry, material);
-        body.rotation.x = 1;
-        body.position.set(5, 0, 0);
-        
-        //人工衛星（パネル１）
-        var geometry = new THREE.BoxGeometry( 0.1, 1.1, 0.6);
-        var material = new THREE.MeshStandardMaterial( {
-          color: 0x00BFFF, 
-          metalness: 1, 
-          roughness: 0.5 } ); 
-        var panel1 = new THREE.Mesh(geometry, material);
-        panel1.rotation.x = 5;
-        panel1.rotation.y = 3.15;
-        panel1.rotation.z = 1.55;
-        panel1.position.set(5.8, 0, 0);
+        var texture = textureLoader.load("2419498_m.jpg");
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = texture;
 
-        //人工衛星（パネル２）
-        var geometry = new THREE.BoxGeometry( 0.1, 1.1, 0.6);
-        var material = new THREE.MeshStandardMaterial( {
-          color: 0x00BFFF, 
-          metalness: 1, 
-          roughness: 0.5} ); 
-        var panel2 = new THREE.Mesh(geometry, material);
-        panel2.rotation.x = 5;
-        panel2.rotation.y = 3.15;
-        panel2.rotation.z = 1.55;
-        panel2.position.set(4.2, 0, 0);
- 
-        //人工衛星のオブジェクト
-        const satellite = new THREE.Group();
-        satellite.add(body); //胴を追加
-        satellite.add(panel1); //パネル１を追加
-        satellite.add(panel2); //パネル２を追加
-        satellite.position.set(0, 0, 0)
-        scene.add(satellite);
+        // 顔を作成
+        const face = new THREE.Sprite(material);
+        face.scale.set(1,1,1);
+        face.position.set(0,1.5,0); //位置を指定
+        scene.add(face);   // シーンに追加
 
-        // 全体のオブジェクト
-        const all = new THREE.Group();
-        all.add(earth); //地球を追加
-        all.add(moon); //月を追加
-        all.add(satellite); //人工衛星を追加
-        all.position.set(0, 0, 0); //全体グループの原点の位置
-        scene.add(all);
+        // 床(右下)を作成
+        var planeGeometry = new THREE.PlaneGeometry(3,3,5,5);
+        var ground1 = new THREE.Mesh(planeGeometry,mat);
+        ground1.rotation.set( -Math.PI/2, 0, 0 );
+        ground1.position.set(1.5,0,1.5);
+        scene.add(ground1);
 
-        //背景  
-        
-        
+         // 床(右上)を作成
+        var planeGeometry = new THREE.PlaneGeometry(3,3,5,5);
+        var ground2 = new THREE.Mesh(planeGeometry,mat);
+        ground2.rotation.set( -Math.PI/2, 0, 0 );
+        ground2.position.set(1.5,0,-1.5);
+        scene.add(ground2);
+
+         // 床(左下)を作成
+        var planeGeometry = new THREE.PlaneGeometry(3,3,5,5);
+        var ground3 = new THREE.Mesh(planeGeometry,mat);
+        ground3.rotation.set( -Math.PI/2, 0, 0 );
+        ground3.position.set(-1.5,0,1.5);
+        scene.add(ground3);
+
+         // 床(左上)を作成
+        var planeGeometry = new THREE.PlaneGeometry(3,3,5,5);
+        var ground4 = new THREE.Mesh(planeGeometry,mat);
+        ground4.rotation.set( -Math.PI/2, 0, 0 );
+        ground4.position.set(-1.5,0,-1.5);
+        scene.add(ground4);
+
+	//　ケース上部
+	const geo1 = new THREE.CylinderGeometry(1,1,0.5,64); 
+        const material1 = new THREE.MeshPhongMaterial({color: 0xBDC3C9}); 
+        const cylinder1 = new THREE.Mesh(geo1, material1); 
+        cylinder1.position.set(0,2.75,0);
+        scene.add(cylinder1);
+	      
+	// ガラス部
+        const geometry = new THREE.CylinderGeometry(1,1,2,64); 
+        const material2 = new THREE.MeshBasicMaterial({color: 0x65BBE9, transparent: true, opacity: 0.5}); 
+        const cylinder = new THREE.Mesh(geometry, material2); 
+        cylinder.position.set(0,1.5,0);
+        scene.add(cylinder);
+
+	// ケース下部
+	const geo2 = new THREE.CylinderGeometry(1,1,0.5,64);  
+        const case2 = new THREE.Mesh(geo2, material1); 
+        case2.position.set(0,0.25,0);
+        scene.add(case2);
+	      
         update();
 
         // 毎フレーム時に実行されるループイベントです
@@ -142,18 +120,6 @@
           // レンダリング
           renderer.render(scene, camera);
           requestAnimationFrame(update);
-
-          //　地球を回転させる
-          earth.rotation.y += 0.01;
-
-          //　月を回転させる
-          moon.rotation.y += 0.005;
-
-          // 人工衛星を回転させる
-          satellite.rotation.y += 0.0025;
-
-          // 全体を回転させる
-          all.rotation.y += 0.005;;
         }
       }
     </script>
