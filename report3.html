@@ -52,20 +52,10 @@
         }
 
         // 形状データを作成
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
-
-        // マテリアルを作成
-        const material = new THREE.PointsMaterial({
-          // 一つ一つのサイズ
-          size: 10,
-          // 色
-          color: 0xffffff,
-        });
-
-        // 物体を作成
-        const mesh = new THREE.Points(geometry, material);
-        scene.add(mesh);
+        let geometry = new THREE.PlaneGeometry( 200, 200 );
+        let material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+        let plane = new THREE.Mesh( geometry, material );
+        scene.add(plane);
       }
 
       update();
