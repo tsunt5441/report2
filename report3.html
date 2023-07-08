@@ -1,99 +1,93 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>第三回レポート</title>
-    <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        body {
-            background-color: #000000;
+  <head>
+    <meta charset="utf-8" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.152.2/build/three.module.js"
         }
-    </style>
-</head>
-<body>
- 
-<div id="WebGL-output">
-</div>
-<script type="text/javascript">
- 
-    function init() {
-        // サイズを指定
-        const width = 800
-        const height = 600;
-        //シーンの作成
-        const scene = new THREE.Scene();
- 
-        //カメラの作成
-        const camera = new THREE.PerspectiveCamera(45, width / height);
- 
-        //レンダラーの作成
-        const webGLRenderer = new THREE.WebGLRenderer();
-        webGLRenderer.setClearColor(new THREE.Color(0x000000));
-        webGLRenderer.setSize(width, height);
- 
-        //カメラの位置
-        camera.position.x = 0;
-        camera.position.y = 0;
-        camera.position.z = 150;
-      
-      // 滑らかにカメラコントローラーを制御する
-      const controls = new THREE.OrbitControls(camera, document.body);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.2;
- 
-        //HTMLに書きだし
-        document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
- 
-        createParticles();
-        tick();
- 
-        //パーティクルの作成
-        function createParticles() {
-            //ジオメトリ
-            const geom = new THREE.Geometry();
-          
-            //マテリアル（サイズ・頂点色彩を使うか・色）
-            const material = new THREE.PointsMaterial({
-                size: 4, //サイズ
-                transparent: true,// 透過true
-                opacity: 0.6, //透過性の数値
-                vertexColors: true, //頂点色彩を使うか
-                sizeAttenuation: true,//カメラの奥行きの減退
-                color: 0x3EDBF0 //色
-            });
- 
-          //5000個のランダムな頂点作成
-            const range = 500;
-            for (var i = 0; i < 5000; i++) {
-                //THREE.Vector3(x,y,z)
-                const particle = new THREE.Vector3(
-                  Math.random() * range - range / 2, 
-                  Math.random() * range - range / 2,
-                  Math.random() * range - range / 2);
-              
-               //頂点をジオメトリに追加
-                geom.vertices.push(particle);
-              
-               //頂点の色を追加
-                const color = new THREE.Color(0xeffffc);
-                geom.colors.push(color);
-            }
- 
-            cloud = new THREE.Points(geom, material);
-            cloud.name = "particles";
-            scene.add(cloud);
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "three";
+
+      // サイズを指定
+      const width = 960;
+      const height = 540;
+      let rot = 0; // 角度
+
+      // レンダラーを作成
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector("#myCanvas"),
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+
+      // シーンを作成
+      const scene = new THREE.Scene();
+
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+
+      // 星屑を作成します (カメラの動きをわかりやすくするため)
+      createStarField();
+
+      function createStarField() {
+        // 頂点情報を格納する配列
+        const vertices = [];
+
+        // 配置する範囲
+        const SIZE = 3000;
+        // 配置する個数
+        const LENGTH = 1000;
+
+        for (let i = 0; i < LENGTH; i++) {
+          const x = SIZE * (Math.random() - 0.5);
+          const y = SIZE * (Math.random() - 0.5);
+          const z = SIZE * (Math.random() - 0.5);
+
+          vertices.push(x, y, z);
         }
- 
-        // 毎フレーム時に実行されるループイベント
-        function tick() {
- 
-            //cloud.rotation.x += 0.001;
-            cloud.rotation.y += 0.0001;
-            
-            webGLRenderer.render(scene, camera);// レンダリング
-            requestAnimationFrame(tick);
-        }
-    }
-</script>
-</body>
+
+        // 形状データを作成
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+
+        // マテリアルを作成
+        const material = new THREE.PointsMaterial({
+          // 一つ一つのサイズ
+          size: 10,
+          // 色
+          color: 0xffffff,
+        });
+
+        // 物体を作成
+        const mesh = new THREE.Points(geometry, material);
+        scene.add(mesh);
+      }
+
+      tick();
+
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        rot += 1;
+
+        // ラジアンに変換する
+        const radian = (rot * Math.PI) / 180;
+        // 角度に応じてカメラの位置を設定
+        camera.position.x = 1000 * Math.sin(radian);
+        camera.position.z = 1000 * Math.cos(radian);
+        // 原点方向を見つめる
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // レンダリング
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(tick);
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
 </html>
