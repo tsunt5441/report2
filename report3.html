@@ -55,10 +55,11 @@
 
         // マテリアルを作成
         const material = new THREE.PointsMaterial({
-          // 一つ一つのサイズ
-          size: 10,
-          // 色
-          color: 0xffffff,
+          size: 10,// 一つ一つのサイズ
+          transparent: true,// 透過true
+          opacity: 0.6, //透過性の数値
+          vertexColors: true, //頂点色彩を使うか
+          color: 0xffffff,//色
         });
 
         // 物体を作成
