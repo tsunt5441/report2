@@ -3,11 +3,6 @@
     <title>パーティクル練習</title>
     <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.101.1/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        body {
-            background-color: #000000;
-        }
-    </style>
 </head>
 <body>
 
@@ -29,6 +24,8 @@
         });
         //webGLRenderer.setClearColor(new THREE.Color(0x000000));
         webGLRenderer.setSize(window.innerWidth, window.innerHeight);
+
+        scene.background = new THREE.Color( 0x404040 );
 
         //カメラの位置
         camera.position.x = 0;
