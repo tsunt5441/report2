@@ -29,33 +29,43 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
-
-      
       // 星屑を作成します (カメラの動きをわかりやすくするため)
-      createStarField();
+      Field();
 
-      function createStarField() {
-        // 頂点情報を格納する配列
-        const vertices = [];
+      function Field() {
+        //ジオメトリ
+            const geom = new THREE.Geometry();
+          
+            //マテリアル（サイズ・頂点色彩を使うか・色）
+            const material = new THREE.PointsMaterial({
+                size: 4, //サイズ
+                transparent: true,// 透過true
+                opacity: 0.6, //透過性の数値
+                vertexColors: true, //頂点色彩を使うか
+                sizeAttenuation: true,//カメラの奥行きの減退
+                color: 0x3EDBF0 //色
+            });
 
-        // 配置する範囲
-        const SIZE = 3000;
-        // 配置する個数
-        const LENGTH = 1000;
+          //5000個のランダムな頂点作成
+        const range = 500;
+        for (var i = 0; i < 5000; i++) {
+            //THREE.Vector3(x,y,z)
+            const particle = new THREE.Vector3(
+              Math.random() * range - range / 2, 
+              Math.random() * range - range / 2,
+              Math.random() * range - range / 2);
+              
+              //頂点をジオメトリに追加
+              geom.vertices.push(particle);
+              
+              //頂点の色を追加
+              const color = new THREE.Color(0xeffffc);
+              geom.colors.push(color);
+          }
 
-        for (let i = 0; i < LENGTH; i++) {
-          const x = SIZE * (Math.random() - 0.5);
-          const y = SIZE * (Math.random() - 0.5);
-          const z = SIZE * (Math.random() - 0.5);
-
-          vertices.push(x, y, z);
-        }
-
-        // 形状データを作成
-        let geometry = new THREE.PlaneGeometry( 200, 200 );
-        let material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-        let plane = new THREE.Mesh( geometry, material );
-        scene.add(plane);
+          snow = new THREE.Points(geom, material);
+          snow.name = "particles";
+          scene.add(snow);
       }
 
       update();
