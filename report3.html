@@ -66,10 +66,10 @@
         scene.add(mesh);
       }
 
-      tick();
+      update();
 
       // 毎フレーム時に実行されるループイベントです
-      function tick() {
+      function update() {
         rot += 0.5;
 
         // ラジアンに変換する
@@ -83,7 +83,7 @@
         // レンダリング
         renderer.render(scene, camera);
 
-        requestAnimationFrame(tick);
+        requestAnimationFrame(update);
       }
     </script>
   </head>
