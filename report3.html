@@ -29,6 +29,11 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
+      //カメラの位置
+      camera.position.x = 0;
+      camera.position.y = 0;
+      camera.position.z = 150;
+      
       // 星屑を作成します (カメラの動きをわかりやすくするため)
       createStarField();
 
