@@ -29,6 +29,11 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
+      // 滑らかにカメラコントローラーを制御する
+      const controls = new THREE.OrbitControls(camera, document.body);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.2;
+      
       // 星屑を作成します (カメラの動きをわかりやすくするため)
       createStarField();
 
