@@ -47,10 +47,10 @@
         //パーティクルの作成
         function createParticles() {
             //ジオメトリ
-            const geom = new THREE.Geometry();
+            const geometry = new THREE.SphereGeometry(1, 64, 32);
           
             //マテリアル（サイズ・頂点色彩を使うか・色）
-            const material = new THREE.PointsMaterial({
+            const material = new THREE.MeshBasicMaterial({
                 size: 4, //サイズ
                 transparent: true,// 透過true
                 opacity: 0.6, //透過性の数値
@@ -76,7 +76,7 @@
                 geom.colors.push(color);
             }
 
-            cloud = new THREE.Points(geom, material);
+            cloud = new THREE.Points(geometry, material);
             cloud.name = "particles";
             scene.add(cloud);
         }
