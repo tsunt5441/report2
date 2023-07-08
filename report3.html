@@ -29,12 +29,6 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
-      // helper
-      const gridHelper = new THREE.GridHelper(2,10); // size, step
-      scene.add(gridHelper);
-      const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
-      scene.add(axisHelper);
-      
       // 星屑を作成します (カメラの動きをわかりやすくするため)
       createStarField();
 
@@ -43,9 +37,9 @@
         const vertices = [];
 
         // 配置する範囲
-        const SIZE = 2000;
+        const SIZE = 3000;
         // 配置する個数
-        const LENGTH = 800;
+        const LENGTH = 1000;
 
         for (let i = 0; i < LENGTH; i++) {
           const x = SIZE * (Math.random() - 0.5);
@@ -61,9 +55,10 @@
 
         // マテリアルを作成
         const material = new THREE.PointsMaterial({
-          size: 20,// 一つ一つのサイズ
-          color: 0xffffff,//色
-          transparent: true,// 透過true
+          // 一つ一つのサイズ
+          size: 10,
+          // 色
+          color: 0xffffff,
         });
 
         // 物体を作成
