@@ -14,7 +14,7 @@
       // サイズを指定
       const width = 960;
       const height = 540;
-      let rotation = 0; // 角度
+      let rot = 0; // 角度
 
       // レンダラーを作成
       const renderer = new THREE.WebGLRenderer({
@@ -70,7 +70,9 @@
 
       // 毎フレーム時に実行されるループイベントです
       function update() {
-        rotation +=1;
+        rot +=1;
+        // ラジアンに変換する
+        const radian = (rot * Math.PI) / 180;
 
         // レンダリング
         renderer.render(scene, camera);
