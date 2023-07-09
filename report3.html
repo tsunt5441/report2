@@ -30,17 +30,12 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
-      // 星屑を作成します (カメラの動きをわかりやすくするため)
-      createStarField();
+      createfirefly();
+      function createfirefly() {
+        const vertices = []; // 頂点情報を格納する配列
 
-      function createStarField() {
-        // 頂点情報を格納する配列
-        const vertices = [];
-
-        // 配置する範囲
-        const SIZE = 3000;
-        // 配置する個数
-        const LENGTH = 2000;
+        const SIZE = 3000; // 配置する範囲
+        const LENGTH = 2000; // 配置する個数
 
         for (let i = 0; i < LENGTH; i++) {
           const x = SIZE * (Math.random() - 0.5);
