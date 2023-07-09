@@ -48,23 +48,21 @@
         const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
 
-        //var geometry = new THREE.Geometry();
-        
-        const SIZE = 1000;
-        const LENGTH = 500;
-        const vertices = [];
-        for(let i = 0; i < LENGTH; i++){
-          const x = SIZE * (Math.random() - 0.5);
-          const y = SIZE * (Math.random() - 0.5);
-          const z = SIZE * (Math.random() - 0.5);
-
-          vertices.push(x, y, z);
+        const geometry = new THREE.Geometry();
+        for (let i = 0; i < 5000; i++) {
+           const x = Math.floor(Math.random() * 1000 - 500);
+           const y = Math.floor(Math.random() * 1000 - 500);
+           const z = Math.floor(Math.random() * 1000 - 500);
+           geometry.vertices.push(new THREE.Vector3(x, y, z));
         }
 
-        /*const material = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 10
-        });*/
+        const material = new THREE.PointsMaterial({
+           color: 0xffffff,
+           size: 10
+        });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
         
         update();
 
