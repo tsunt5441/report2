@@ -29,6 +29,17 @@
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
 
+      // 平行光源1
+      var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+      directionalLight1.position.set(10, 10, 10);
+      // シーンに追加
+      scene.add(directionalLight1);
+      // 平行光源2
+      var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+      directionalLight2.position.set(-10, -10, -10);
+      // シーンに追加
+      scene.add(directionalLight2);
+
       // 星屑を作成します (カメラの動きをわかりやすくするため)
       createStarField();
 
