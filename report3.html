@@ -32,11 +32,14 @@
       // 星屑を作成します (カメラの動きをわかりやすくするため)
       createStarField();
 
-      function init() {
-        const vertices = []; // 頂点情報を格納する配列
+      function createStarField() {
+        // 頂点情報を格納する配列
+        const vertices = [];
 
-        const SIZE = 3000;  // 配置する範囲
-        const LENGTH =1000;// 配置する個数
+        // 配置する範囲
+        const SIZE = 3000;
+        // 配置する個数
+        const LENGTH = 1000;
 
         for (let i = 0; i < LENGTH; i++) {
           const x = SIZE * (Math.random() - 0.5);
@@ -52,8 +55,10 @@
 
         // マテリアルを作成
         const material = new THREE.PointsMaterial({
-          size: 10, // 一つ一つのサイズ
-          color: 0xffffff, // 色
+          // 一つ一つのサイズ
+          size: 10,
+          // 色
+          color: 0xffffff,
         });
 
         // 物体を作成
@@ -65,7 +70,7 @@
 
       // 毎フレーム時に実行されるループイベントです
       function tick() {
-        rot -= 0.5;
+        rot += 1;
 
         // ラジアンに変換する
         const radian = (rot * Math.PI) / 180;
