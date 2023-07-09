@@ -1,105 +1,96 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.152.2/build/three.module.js"
-        }
-      }
-    </script>
-    <script type="module">
-      import * as THREE from "three";
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
 
-      // サイズを指定
-      const width = 960;
-      const height = 540;
-      let rot = 0; // 角度
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
 
-      // レンダラーを作成
-      const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector("#myCanvas"),
-      });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(width, height);
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
 
-      // シーンを作成
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color( 0x000000 );
-      
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height);
+        // シーンを作成
+        const scene = new THREE.Scene();
 
-      // 平行光源1
-      var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-      directionalLight1.position.set(10, 10, 10);
-      // シーンに追加
-      scene.add(directionalLight1);
-      // 平行光源2
-      var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-      directionalLight2.position.set(-10, -10, -10);
-      // シーンに追加
-      scene.add(directionalLight2);
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 25);
 
-      // 星屑を作成します (カメラの動きをわかりやすくするため)
-      createStarField();
-
-      function createStarField() {
-        // 頂点情報を格納する配列
-        const vertices = [];
-
-        // 配置する範囲
-        const SIZE = 3000;
-        // 配置する個数
-        const LENGTH = 2000;
-
-        for (let i = 0; i < LENGTH; i++) {
-          const x = SIZE * (Math.random() - 0.4);
-          const y = SIZE * (Math.random() - 0.4);
-          const z = SIZE * (Math.random() - 0.4);
-
-          vertices.push(x, y, z);
-        }
-
-        // 形状データを作成
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
-
-        // マテリアルを作成
-        const material = new THREE.PointsMaterial({
-          // 一つ一つのサイズ
-          size: 10,
-          // 色
-          color: 0xffffff,
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+         // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+        directionalLight2.position.set(-10, -10, -10);
+        // シーンに追加
+        scene.add(directionalLight2);
+    
+         // helper
+        const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+        
+        let geometry = new THREE.Geometry();
+        let material = new THREE.PointsMaterial({
+        //pointsを使用する場合はMaterialのサイズで調整する
+        size:0.1,
+        vertexColors:true
         });
 
-        // 物体を作成
-        const mesh = new THREE.Points(geometry, material);
-        scene.add(mesh);
-      }
+        let range = 1000;
 
-      tick();
+        for (let i = 0; i < range; i++) {
 
-      // 毎フレーム時に実行されるループイベントです
-      function tick() {
-        rot -= 0.5;
+          let pos = getPostion(
+          Math.random() * width,
+          Math.random() * height,
+          Math.random() * width
+        );
 
-        // ラジアンに変換する
-        const radian = (rot * Math.PI) / 180;
-        // 角度に応じてカメラの位置を設定
-        camera.position.x = 1000 * Math.sin(radian);
-        camera.position.z = 1000 * Math.cos(radian);
-        // 原点方向を見つめる
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
+          //頂点データを生成
+          let particle = new THREE.Vector3(pos.x,pos.y,pos.z);
 
-        // レンダリング
-        renderer.render(scene, camera);
+          //頂点色を設定
+          let color = new THREE.Color(0xffff);
+                
+          //頂点データをジオメトリに追加
+          geometry.vertices.push(particle);
 
-        requestAnimationFrame(tick);
+          //頂点色をジオメトリに追加
+          geometry.colors.push(color);
+
+        }
+
+        point = new THREE.Points(geometry,material);
+        scene.add(point);
+
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
+        }
       }
     </script>
-  </head>
-  <body>
-    <canvas id="myCanvas"></canvas>
-  </body>
+</body>
 </html>
