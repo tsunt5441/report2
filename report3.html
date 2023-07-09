@@ -48,6 +48,18 @@
         const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
 
+        const SIZE = 1000;
+        const LENGTH = 500;
+        const vertices = [];
+        for(let i = 0; i < LENGTH; i++){
+          const x = SIZE * (Math.random() - 0.5);
+          const y = SIZE * (Math.random() - 0.5);
+          const z = SIZE * (Math.random() - 0.5);
+
+          vertices.push(x, y, z);
+        }
+
+        
         update();
 
         // 毎フレーム時に実行されるループイベントです
