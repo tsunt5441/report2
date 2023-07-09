@@ -48,6 +48,7 @@
         const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
         scene.add(axisHelper);
 
+        var geometry = new THREE.Geometry();
         const SIZE = 1000;
         const LENGTH = 500;
         const vertices = [];
@@ -59,6 +60,10 @@
           vertices.push(x, y, z);
         }
 
+        const material = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 10
+        });
         
         update();
 
